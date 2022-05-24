@@ -1,0 +1,5 @@
+<!--pages/question/list/question-list.wxml-->
+<van-dropdown-menu>
+  <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" bind:change="change"/>
+</van-dropdown-menu>
+<view class="cell" wx:for="{{ items }}"> {{ item.name }} </view>

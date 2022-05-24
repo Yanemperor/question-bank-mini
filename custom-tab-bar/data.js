@@ -1,6 +1,11 @@
 export default [
   {
     icon: 'home',
+    text: '题库',
+    url: 'pages/question/list/question-list',
+  },
+  {
+    icon: 'home',
     text: '首页',
     url: 'pages/home/home',
   },
