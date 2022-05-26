@@ -30,7 +30,9 @@
     "pages/order/delivery-detail/index",
     "pages/order/invoice/index",
     "pages/usercenter/name-edit/index",
-    "pages/question"
+    "pages/question",
+    "pages/question/type/question-type",
+    "pages/question/choice-question/choice-question"
   ],
   "tabBar": {
     "custom": true,

@@ -1,0 +1,16 @@
+<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%" paging-enabled="true" enhanced="true">
+  <block wx:for="{{ choices }}" wx:key="index" wx:for-item="choice">
+    <view class="scroll-view-item_H demo-text-1">
+      <view>
+        {{ choice.title }}
+      </view>
+      <view>
+        <block wx:for="{{ choice.options }}" wx:key="index" wx:for-item="option">
+          <view class="{{ option.type == 1 ? 'option-correct' : option.type == 2 ? 'option-error' : 'option-defult' }}" bindtap="optionSelected" data-key="{{option.key}}" data-choice="{{choice}}" data-index="{{index}}">
+            {{ option.key + ":" + option.value }}
+          </view>
+        </block>
+      </view>
+    </view>
+  </block>
+</scroll-view>
