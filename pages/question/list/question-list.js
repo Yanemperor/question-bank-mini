@@ -43,7 +43,7 @@ Page({
   selected(item) {
     let id = item.currentTarget.dataset["id"]
     wx.navigateTo({
-      url: `/pages/question/type/question-type?id=${id}`,
+      url: `/pages/question/type/question-type?paper_id=${id}`,
     });
   },
 

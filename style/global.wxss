@@ -19,13 +19,13 @@
   color: #de1c24;
 }
 .text-title {
-  color: #282828;
+  color: #333333;
 }
 .text-normal {
-  color: #5d5d5d;
+  color: #666666;
 }
 .text-small {
-  color: #9b9b9b;
+  color: #999999;
 }
 .text-minor {
   color: #ececec;

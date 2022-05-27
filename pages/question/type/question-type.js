@@ -8,48 +8,39 @@ Page({
    * 页面的初始数据
    */
   data: {
-    "paper_id" : "",
-    "items" : [],
+    "paper_id": "",
+    "items": [],
     "choices": [],
   },
 
-  enquire(paper_id) {
-    if (paper_id.includes("political")) {
+  enquire() {
+    console.log("VVVVVVV" + this.paper_id)
+    if (this.paper_id.includes("political")) {
       this.setData({
-        items : ["选择题", "非选择题"]
+        items: ["选择题", "非选择题"]
       });
     }
-    // let that = this;
-    // db.collection('answer_questions').where({
-    //   paper_id: paper_id
-    // }).get({
-    //   success: function(res) {
-    //     console.log(res.data)
-    //     if (paper_id.includes("political")) {
-    //       that.setData({
-    //         items : ["选择题", "非选择题"]
-    //       });
-    //     }
-    //     that.filter(res.data);
-    //   }
-    // });
+    let that = this;
+    db.collection('answer_questions').where({
+      paper_id: this.paper_id
+    }).get({
+      success: function (res) {
+        console.log(res.data)
+        that.choices = res.data;
+      }
+    });
   },
 
   selected(item) {
-    var type = 0;
-    if (item === "选择题") {
-      type = 0
-    }
+    var json = JSON.stringify(this.choices);
     wx.navigateTo({
-      url: `/pages/question/choice-question/choice-question?paper_id=${this.paper_id}&type=${type}`,
+      // url: `/pages/question/choice-question/choice-question?paper_id=${this.paper_id}&type=${type}`,
+      url: `/pages/question/choice-question/choice-question?json=${json}&paper_id=${this.paper_id}`,
     });
   },
 
   filter(data) {
     console.log("data:" + data);
-    // for (const obj in data) {
-    //   console.log("title:" + obj["title"]);
-    // }
     var elements = [];
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {
@@ -66,8 +57,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.enquire(options.id);
-    this.paper_id = options.id;
+    this.paper_id = options.paper_id;
+    this.setData({
+      paper_id : this.paper_id
+    })
+    this.enquire();
   },
 
   /**

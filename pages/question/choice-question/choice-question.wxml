@@ -1,16 +1,51 @@
-<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%" paging-enabled="true" enhanced="true">
-  <block wx:for="{{ choices }}" wx:key="index" wx:for-item="choice">
-    <view class="scroll-view-item_H demo-text-1">
-      <view>
-        {{ choice.title }}
-      </view>
-      <view>
-        <block wx:for="{{ choice.options }}" wx:key="index" wx:for-item="option">
-          <view class="{{ option.type == 1 ? 'option-correct' : option.type == 2 ? 'option-error' : 'option-defult' }}" bindtap="optionSelected" data-key="{{option.key}}" data-choice="{{choice}}" data-index="{{index}}">
-            {{ option.key + ":" + option.value }}
+<view class="bg">
+  <swiper class="swiper" circular="{{true}}" bindchange="currentIndexChange">
+    <block wx:for="{{choices}}" wx:key="index" wx:for-item="choice">
+      <swiper-item>
+        <view class="number">
+          <view class="text-primary number-current">{{ currentIndex + 1 }}</view>
+          <view class="number-total text-title">/{{ total }}</view>
+          <view class="bg-primary number-type">单选题</view>
+        </view>
+        <van-divider />
+        <view class="title">{{ choice.title }}</view>
+        <view class="option">
+          <block wx:for="{{ choice.options }}" wx:key="index" wx:for-item="option">
+            <view class="{{ option.type == 1 ? 'option-correct' : option.type == 2 ? 'option-error' : 'option-defult' }}" bindtap="optionSelected" data-key="{{option.key}}" data-choice="{{choice}}" data-index="{{index}}">
+              {{ option.key + " | " + option.value }}
+            </view>
+          </block>
+        </view>
+        <van-divider />
+        <view class="answer text-normal" wx:if="{{ choice.isSelected }}">
+          答案：
+          {{ choice.answer }}
+        </view>
+        <scroll-view scroll-y="true" class="scroll">
+          <view class="parsing text-normal" wx:if="{{ choice.isSelected }}">
+            {{ choice.parsing }}
           </view>
-        </block>
-      </view>
-    </view>
-  </block>
-</scroll-view>
+        </scroll-view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<view class="footer">
+  <view class="footer-submit">
+    <van-button type="primary" size="large" bind:click="submit">交卷</van-button>
+  </view>
+</view>
+<van-dialog id="van-dialog" />
+<van-cell title="展示弹出层" is-link bind:click="showPopup" />
+<van-popup show="{{ show }}" bind:close="onClose" position="top" custom-style="height: 20%;">
+<view class="popup-result">
+  <view class="text-success number-current">{{ correct }}</view>
+  <view class="number-total text-title">/{{ total }}</view>
+</view>
+  
+  <view class="popup-next">
+    <van-button wx:if="{{ correct != total }}" type="primary" size="large" bind:click="next">查看错题</van-button>
+    <!-- <view wx:if="{{ correct == total }}">恭喜你全部答对了~</view> -->
+    <van-button wx:if="{{ correct == total }}" type="primary" size="large" bind:click="onClose">恭喜你全部答对了~</van-button>
+  </view>
+</van-popup>

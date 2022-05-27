@@ -1,67 +1,121 @@
 /* pages/question/choice-question/choice-question.wxss */
 
-.scroll {
-  height: 100%;
-  width: 100%;
+.bg {
+  padding: 16rpx 32rpx;
+  background-color: white;
+}
+
+.swiper {
+  /* height: 1000rpx; */
+  height: 85vh;
+}
+
+.number {
+  display: flex;
+  align-items: center;
+}
+
+.number-current {
+  font-size: 64rpx;
+}
+
+.number-total {
+  font-size: 32rpx;
+}
+
+.number-type {
+  display: flex;
+  align-items: center;
+  padding: 0rpx 10rpx;
+  border-radius: 5rpx;
+  margin-left: 30rpx;
+  height: 50rpx;
+}
+
+.title {
+  font-size: large;
+}
+
+.option {
+  margin-top: 20rpx;
+}
+
+.option-item {
+  height: 50rpx;
+  background-color: #ececec;
 }
 
 .option-defult {
-  height: 50rpx;
+  display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+  height: 80rpx;
   width: 100%;
   padding-left: 20rpx;
-  background-color: white;
+  background-color: #ececec;
   color: #333333;
+  font-size: large;
 }
 
 .option-correct {
-  height: 50rpx;
+  display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+  height: 80rpx;
   width: 100%;
   padding-left: 20rpx;
-  background-color: green;
-  color: #333333;
+  background-color: #5fb446;
+  color: #ffffff;
+  font-size: large;
 }
 
 .option-error {
-  height: 50rpx;
+  display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+  height: 80rpx;
   width: 100%;
   padding-left: 20rpx;
-  background-color: red;
-  color: #333333;
+  background-color: #de1c24;
+  color: #ffffff;
+  font-size: large;
 }
 
-.demo-text-1{
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  background-color: #1AAD19;
-  color: #FFFFFF;
-  font-size: 36rpx;
+.answer {
+  font-size: large;
 }
 
-.demo-text-2{
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  background-color: #2782D7;
-  color: #FFFFFF;
-  font-size: 36rpx;
+.parsing {
+  margin-top: 10rpx;
+  font-size: large;
 }
 
-.demo-text-3{
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  background-color: #F1F1F1;
-  color: #353535;
-  font-size: 36rpx;
+.scroll {
+  height: 500rpx;
 }
 
-.scroll-view-item_H{
-  display: inline-block;
+.footer {
+  position: fixed;
+  bottom: 0;
   width: 100%;
-  height: 800rpx;
+  padding-bottom: 50rpx;
 }
 
-.scroll-view_H{
-  white-space: nowrap;
+.footer-submit {
+  margin: 0 auto;
+  width: 60%;
+  height: 80rpx;
+}
+
+.popup-next {
+  margin: 0 auto;
+  width: 60%;
+  height: 80rpx;
+}
+
+.popup-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 180rpx;
 }
