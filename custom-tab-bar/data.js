@@ -2,16 +2,16 @@ export default [
   {
     icon: 'home-o',
     text: '答题',
-    url: 'pages/question/list/question-list',
+    url: '/pages/question/list/question-list',
   },
   {
     icon: 'friends-o',
     text: '题库',
-    url: 'pages/file/index/index',
+    url: '/pages/file/index/index',
   },
   {
     icon: 'setting-o',
     text: '我的',
-    url: 'pages/my/index/index',
+    url: '/pages/my/index/index',
   },
 ];

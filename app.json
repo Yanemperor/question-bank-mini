@@ -6,7 +6,7 @@
     "pages/file/index/index",
     "pages/file/list/list",
     "pages/my/index/index"
-  ],
+    ],
   "tabBar": {
     "custom": true,
     "color": "#666666",
