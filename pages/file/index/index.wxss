@@ -1,0 +1,9 @@
+/* pages/file/index/index.wxss */
+
+.cell {
+  height: 80rpx;
+  padding-left: 20rpx;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}

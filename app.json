@@ -30,9 +30,10 @@
     "pages/order/delivery-detail/index",
     "pages/order/invoice/index",
     "pages/usercenter/name-edit/index",
-    "pages/question",
     "pages/question/type/question-type",
-    "pages/question/choice-question/choice-question"
+    "pages/question/choice-question/choice-question",
+    "pages/file/index/index",
+    "pages/file/list/list"
   ],
   "tabBar": {
     "custom": true,
@@ -43,6 +44,10 @@
     "list": [
       {
         "pagePath": "pages/question/list/question-list",
+        "text": "答题"
+      },
+      {
+        "pagePath": "pages/file/index/index",
         "text": "题库"
       },
       {
@@ -52,10 +57,6 @@
       {
         "pagePath": "pages/goods/category/index",
         "text": "分类"
-      },
-      {
-        "pagePath": "pages/cart/index",
-        "text": "购物车"
       },
       {
         "pagePath": "pages/usercenter/index",

@@ -1,0 +1,10 @@
+<!--pages/file/index/index.wxml-->
+<van-dropdown-menu>
+  <van-dropdown-item value="{{ value }}" options="{{ options }}" bind:change="change"/>
+</van-dropdown-menu>
+<!-- <view class="cell" wx:for="{{ items }}" bindtap="selected(item)"> {{ item.name }} </view> -->
+<block wx:for="{{ options[value].items }}" wx:key="index" wx:for-item="item">
+  <view class="cell" bindtap="selected" data-id="{{ item.id }}">
+    {{ item.name }}
+  </view>
+</block>

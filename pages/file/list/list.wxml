@@ -1,0 +1,6 @@
+<!--pages/file/list/list.wxml-->
+<block wx:for="{{ items }}" wx:key="index" wx:for-item="item">
+  <view class="cell" bindtap="selected" data-url="{{ item.url }}">
+    {{ item.name }}
+  </view>
+</block>
