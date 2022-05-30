@@ -7,16 +7,20 @@ Component({
       custom: {
         colorPrimary: '#333',
       },
-    },
+    }
   },
 
   methods: {
     onChange(event) {
-      this.setData({ active: event.detail.value });
+      // event.detail 的值为当前选中项的索引
+      this.setData({
+        active: event.detail
+      });
+      
       wx.switchTab({
-        url: this.data.list[event.detail.value].url.startsWith('/')
-          ? this.data.list[event.detail.value].url
-          : `/${this.data.list[event.detail.value].url}`,
+        url: this.data.list[event.detail].url.startsWith('/') ?
+          this.data.list[event.detail].url :
+          `/${this.data.list[event.detail].url}`,
       });
     },
 
@@ -25,10 +29,12 @@ Component({
       const route = page ? page.route.split('?')[0] : '';
       const active = this.data.list.findIndex(
         (item) =>
-          (item.url.startsWith('/') ? item.url.substr(1) : item.url) ===
-          `${route}`,
+        (item.url.startsWith('/') ? item.url.substr(1) : item.url) ===
+        `${route}`,
       );
-      this.setData({ active });
+      this.setData({
+        active
+      });
     },
   },
 });
