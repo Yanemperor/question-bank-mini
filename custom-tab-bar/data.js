@@ -10,18 +10,8 @@ export default [
     url: 'pages/file/index/index',
   },
   {
-    icon: 'home-o',
-    text: '首页',
-    url: 'pages/home/home',
-  },
-  {
-    icon: 'search',
-    text: '分类',
-    url: 'pages/goods/category/index',
-  },
-  {
     icon: 'setting-o',
-    text: '个人中心',
-    url: 'pages/usercenter/index',
+    text: '我的',
+    url: 'pages/my/index/index',
   },
 ];
