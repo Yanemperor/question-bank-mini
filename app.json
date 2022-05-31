@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/question/index/index",
     "pages/question/list/question-list",
     "pages/question/type/question-type",
     "pages/question/choice-question/choice-question",
@@ -15,7 +16,7 @@
     "borderStyle": "black",
     "list": [
       {
-        "pagePath": "pages/question/list/question-list",
+        "pagePath": "pages/question/index/index",
         "text": "答题"
       },
       {

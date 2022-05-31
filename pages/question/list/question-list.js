@@ -7,37 +7,25 @@ Page({
    * 页面的初始数据
    */
   data: {
-    option1: [
-      { text: '大学政治', value: 0 },
-      { text: '大学英语', value: 1 }
-      // { text: '大学语文', value: 2 },
-      // { text: '大学教育理论', value: 3 },
-      // { text: '大学艺术概论', value: 4 },
-      // { text: '大学民法', value: 5 },
-      // { text: '大学生态学', value: 6 }
-    ],
-    value1: 0,
+    id: "",
     items: [],
     data: []
   },
 
   enquire(e) {
     let that = this
-    db.collection('question_list').get({
-      success: function(res) {
-        that.data = res.data
-        console.log(res.data)
+    db.collection('question_list').where({
+      _id: that.id
+    }).get({
+      success: function (res) {
+        console.log("res" + JSON.stringify(res.data[0].items));
+        let items = res.data[0].items
+        that.items = items;
         that.setData({
-          items : that.data[0].items
+          items: items
         })
       }
-    })
-  },
-
-  change(index) {
-    this.setData({
-      items : this.data[index.detail].items
-    })
+    });
   },
 
   selected(item) {
@@ -51,6 +39,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    this.id = options.id;
+    this.setData({
+      id: this.id
+    })
     this.enquire()
   },
 
@@ -65,7 +57,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-		this.getTabBar().init();
+		
   },
 
   /**

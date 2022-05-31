@@ -14,7 +14,6 @@ Page({
   },
 
   enquire() {
-    console.log("VVVVVVV" + this.paper_id)
     if (this.paper_id.includes("political")) {
       this.setData({
         items: ["选择题", "非选择题"]

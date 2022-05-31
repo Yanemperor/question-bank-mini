@@ -1,8 +1,4 @@
 <!--pages/question/list/question-list.wxml-->
-<van-dropdown-menu>
-  <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" bind:change="change"/>
-</van-dropdown-menu>
-<!-- <view class="cell" wx:for="{{ items }}" bindtap="selected(item)"> {{ item.name }} </view> -->
 <block wx:for="{{ items }}" wx:key="index" wx:for-item="item">
   <view class="cell" bindtap="selected" data-id="{{ item.id }}">
     {{ item.name }}

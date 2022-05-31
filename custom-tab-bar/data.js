@@ -2,7 +2,7 @@ export default [
   {
     icon: 'home-o',
     text: '答题',
-    url: '/pages/question/list/question-list',
+    url: '/pages/question/index/index',
   },
   {
     icon: 'friends-o',
