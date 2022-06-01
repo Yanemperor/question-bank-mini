@@ -19,17 +19,8 @@ Page({
   },
 
   downloadFile(url) {
-    // wx.downloadFile({
-    //   url: 'url',
-    //   timeout: 5,
-    //   success: (result) => {
-    //     if (res.statusCode === 200) {
-    //       console.log(result.tempFilePath);
-    //     }
-    //   }
-    // })
     wx.cloud.downloadFile({
-      fileID: "cloud://cloud1-6gxrrp6j10c4b06e.636c-cloud1-6gxrrp6j10c4b06e-1312107704/rest1.docx"
+      fileID: url
     }).then(res => {
       console.log(res.tempFilePath)
       wx.openDocument({

@@ -5,12 +5,12 @@ export default [
     url: '/pages/question/index/index',
   },
   {
-    icon: 'friends-o',
-    text: '题库',
+    icon: 'notes-o',
+    text: '真题',
     url: '/pages/file/index/index',
   },
   {
-    icon: 'setting-o',
+    icon: 'contact',
     text: '我的',
     url: '/pages/my/index/index',
   },

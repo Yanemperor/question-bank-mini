@@ -7,7 +7,8 @@
     "pages/file/index/index",
     "pages/file/list/list",
     "pages/my/index/index",
-    "pages/question/text-topic/text-topic"
+    "pages/question/text-topic/text-topic",
+    "pages/my/about/about"
   ],
   "tabBar": {
     "custom": true,
@@ -22,7 +23,7 @@
       },
       {
         "pagePath": "pages/file/index/index",
-        "text": "题库"
+        "text": "文件"
       },
       {
         "pagePath": "pages/my/index/index",
@@ -35,7 +36,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "真题",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",

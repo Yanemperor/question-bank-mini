@@ -1,0 +1,7 @@
+/* pages/my/about/about.wxss */
+
+.bg {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}

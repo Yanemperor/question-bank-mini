@@ -3,4 +3,5 @@
   <view class="cell" bindtap="selected" data-id="{{ item.id }}">
     {{ item.name }}
   </view>
+  <view class="line"></view>
 </block>

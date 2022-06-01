@@ -1,24 +1,11 @@
-// pages/my/index/index.js
+// pages/my/about/about.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    items: [
-      {
-        "name" : "关于我"
-      }
-    ],
-  },
 
-  selected(item) {
-    let name = item.currentTarget.dataset["name"]
-    if (name === "关于我") {
-      wx.navigateTo({
-        url: `/pages/my/about/about`,
-      });
-    }
   },
 
   /**
@@ -39,7 +26,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-		this.getTabBar().init();
+
   },
 
   /**
