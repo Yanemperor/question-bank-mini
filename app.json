@@ -6,8 +6,9 @@
     "pages/question/choice-question/choice-question",
     "pages/file/index/index",
     "pages/file/list/list",
-    "pages/my/index/index"
-    ],
+    "pages/my/index/index",
+    "pages/question/text-topic/text-topic"
+  ],
   "tabBar": {
     "custom": true,
     "color": "#666666",

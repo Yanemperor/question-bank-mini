@@ -1,0 +1,21 @@
+<!--pages/question/text-topic/text-topic.wxml-->
+<view class="bg">
+  <swiper class="swiper" circular="{{true}}" bindchange="currentIndexChange">
+    <block wx:for="{{choices}}" wx:key="index" wx:for-item="choice">
+      <swiper-item>
+        <view class="number">
+          <view class="text-primary number-current">{{ currentIndex + 1 }}</view>
+          <view class="number-total text-title">/{{ total }}</view>
+          <view class="bg-primary number-type">{{ typeName }}</view>
+        </view>
+        <van-divider />
+        <view class="title">{{ choice.title }}</view>
+        <van-divider />
+        <view class="answer text-normal">
+          答案：
+          {{ choice.answer }}
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

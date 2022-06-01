@@ -1,8 +1,6 @@
 // pages/question/choice_question/choice-question.js
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
-const db = wx.cloud.database()
-
 Page({
 
   /**
@@ -13,6 +11,7 @@ Page({
     "results": [],
     "paper_id": "",
     "type": "", // 题型 0 选择题
+    "typeName": "",
     "currentIndex": 0,
     "total": 0,
     "correct": 0,
@@ -23,7 +22,8 @@ Page({
     let current = index.detail.current;
     this.currentIndex = current;
     this.setData({
-      currentIndex: this.currentIndex
+      currentIndex: this.currentIndex,
+      typeName : this.choices[this.currentIndex].typeName
     })
   },
 
@@ -109,10 +109,12 @@ Page({
     this.choices = JSON.parse(json);
     this.total = this.choices.length;
     this.paper_id = options.paper_id;
+    this.typeName = this.choices[this.currentIndex].typeName
     this.setData({
       choices: this.choices,
       total: this.total,
       paper_id: this.paper_id,
+      typeName : this.typeName
     })
   },
 
@@ -141,9 +143,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    wx.reLaunch({
-      url: `/pages/question/type/question-type?paper_id=${this.paper_id}`,
-    })
+    // wx.reLaunch({
+    //   url: `/pages/question/type/question-type?paper_id=${this.paper_id}`,
+    // })
   },
 
   /**

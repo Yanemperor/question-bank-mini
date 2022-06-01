@@ -5,7 +5,7 @@
         <view class="number">
           <view class="text-primary number-current">{{ currentIndex + 1 }}</view>
           <view class="number-total text-title">/{{ total }}</view>
-          <view class="bg-primary number-type">单选题</view>
+          <view class="bg-primary number-type">{{ typeName }}</view>
         </view>
         <van-divider />
         <view class="title">{{ choice.title }}</view>

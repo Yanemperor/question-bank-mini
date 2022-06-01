@@ -11,7 +11,41 @@ Page({
     "paper_id": "",
     "items": [],
     "choices": [],
+    "all": [],
+    "texts": [],
   },
+
+  async loadData() {
+    // 1.获取数据总数
+    let count = await db.collection('answer_questions').where({
+      paper_id: this.paper_id
+    }).count();
+    count = count.total;
+    let all = [];
+    for (let i = 0; i < count; i += 20) {
+      let list = await db.collection('answer_questions').where({
+        paper_id: this.paper_id
+      }).skip(i).get();
+      all = all.concat(list.data);
+    }
+    this.all = all;
+    var choices = [];
+    var texts = [];
+    for (const key in all) {
+      if (Object.hasOwnProperty.call(all, key)) {
+        const item = all[key];
+        if (item.type === "1") {
+          choices.push(item);
+        }else{
+          texts.push(item);
+        }
+      }
+    }
+    this.choices = choices;
+    this.texts = texts;
+    console.log("返回的结果", this.texts);
+  },
+
 
   enquire() {
     if (this.paper_id.includes("political")) {
@@ -19,23 +53,33 @@ Page({
         items: ["选择题", "非选择题"]
       });
     }
-    let that = this;
-    db.collection('answer_questions').where({
-      paper_id: this.paper_id
-    }).get({
-      success: function (res) {
-        console.log(res.data)
-        that.choices = res.data;
-      }
-    });
+    this.loadData();
+    
+    // let that = this;
+  
+    // db.collection('answer_questions').where({
+    //   paper_id: this.paper_id
+    // }).get({
+    //   success: function (res) {
+    //     console.log(res.data)
+    //     that.choices = res.data;
+    //   }
+    // });
   },
 
-  selected(item) {
-    var json = JSON.stringify(this.choices);
-    wx.navigateTo({
-      // url: `/pages/question/choice-question/choice-question?paper_id=${this.paper_id}&type=${type}`,
-      url: `/pages/question/choice-question/choice-question?json=${json}&paper_id=${this.paper_id}`,
-    });
+  selected(option) {
+    let name = option.currentTarget.dataset["name"]
+    if (name === "选择题") {
+      var json = JSON.stringify(this.choices);
+      wx.navigateTo({
+        url: `/pages/question/choice-question/choice-question?json=${json}&paper_id=${this.paper_id}`,
+      });
+    } else {
+      var json = JSON.stringify(this.texts);
+      wx.navigateTo({
+        url: `/pages/question/text-topic/text-topic?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
+      });
+    }
   },
 
   filter(data) {
@@ -58,7 +102,7 @@ Page({
   onLoad(options) {
     this.paper_id = options.paper_id;
     this.setData({
-      paper_id : this.paper_id
+      paper_id: this.paper_id
     })
     this.enquire();
   },
