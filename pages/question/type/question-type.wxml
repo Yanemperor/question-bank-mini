@@ -1,7 +1,10 @@
 <!--pages/question/type/question-type.wxml-->
 <block wx:for="{{ items }}" wx:key="index" wx:for-item="item">
   <view class="cell" bindtap="selected" data-name="{{ item }}">
-    {{ item }}
+    <view>
+      {{ item }}
+    </view>
+    <van-icon name="arrow" />
   </view>
   <view class="line"></view>
 </block>

@@ -6,4 +6,16 @@
   background-color: white;
   display: flex;
   align-items: center;
+  /* display: flex; */
+  justify-content: space-between;
+  padding-right: 40rpx;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-text {
+  padding-left: 15rpx;
 }

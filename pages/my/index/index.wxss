@@ -1,8 +1,11 @@
 /* pages/my/index/index.wxss */
-.cell {
-  height: 80rpx;
-  padding-left: 20rpx;
-  background-color: white;
+
+
+.item {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+}
+
+.item-text {
+  padding-left: 15rpx;
 }

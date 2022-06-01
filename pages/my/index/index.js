@@ -7,14 +7,14 @@ Page({
   data: {
     items: [
       {
-        "name" : "关于我"
+        "name" : "关于"
       }
     ],
   },
 
   selected(item) {
     let name = item.currentTarget.dataset["name"]
-    if (name === "关于我") {
+    if (name === "关于") {
       wx.navigateTo({
         url: `/pages/my/about/about`,
       });
