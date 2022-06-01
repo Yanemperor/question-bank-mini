@@ -83,6 +83,12 @@ Page({
     this.setData({
       value: this.value
     })
+    wx.setStorage({
+      data: {
+        value: this.value
+      },
+      key: 'indexValue',
+    })
   },
 
   selected(item) {
@@ -97,7 +103,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+    let that = this
+    wx.getStorage({
+      key: 'indexValue',
+      success(res) {
+        that.setData({
+          value : res.data.value
+        })
+        console.log(res);
+      }
+    })
   },
 
   /**
@@ -111,7 +126,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-		this.getTabBar().init();
+    this.getTabBar().init();
   },
 
   /**

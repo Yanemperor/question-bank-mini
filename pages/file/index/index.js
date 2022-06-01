@@ -84,6 +84,12 @@ Page({
     this.setData({
       value: this.value
     })
+    wx.setStorage({
+      data: {
+        value: this.value
+      },
+      key: 'fileValue',
+    })
   },
 
   selected(item) {
@@ -98,7 +104,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+    let that = this
+    wx.getStorage({
+      key: 'fileValue',
+      success(res) {
+        that.setData({
+          value : res.data.value
+        })
+        console.log(res);
+      }
+    })
   },
 
   /**
