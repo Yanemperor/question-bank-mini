@@ -103,12 +103,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    const { json,  paper_id} = options;
+    // console.log('json', json);
+    const detail = JSON.parse(decodeURIComponent(json));
     this.currentIndex = 0;
     this.correct = 0;
-    let json = options.json;
-    this.choices = JSON.parse(json);
+    this.choices = detail;
+    console.log("AAAAAA",this.choices);
     this.total = this.choices.length;
-    this.paper_id = options.paper_id;
+    this.paper_id = paper_id;
     this.typeName = this.choices[this.currentIndex].typeName
     this.setData({
       choices: this.choices,

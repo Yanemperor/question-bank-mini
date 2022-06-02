@@ -72,7 +72,7 @@ Page({
     if (name === "选择题") {
       var json = JSON.stringify(this.choices);
       wx.navigateTo({
-        url: `/pages/question/choice-question/choice-question?json=${json}&paper_id=${this.paper_id}`,
+        url: `/pages/question/choice-question/choice-question?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
       });
     } else {
       var json = JSON.stringify(this.texts);
