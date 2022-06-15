@@ -1,4 +1,3 @@
-// pages/question/choice_question/choice-question.js
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
@@ -13,21 +12,35 @@ Page({
     "type": "", // 题型 0 选择题
     "typeName": "",
     "currentIndex": 0,
+    "currentIndexText": 0,
     "total": 0,
+    "totalText": 0,
     "correct": 0,
     "show": false,
-    "isPhonetic": false,
-    "isLongTitle": false,
-    "isArticle": false,
+    "isCloze": false,   // 是否是完形填空
+    "isArticle": false, // 是否是阅读理解
+    "isDailyConversation": false, // 是否是日常对话
     "titleShow": false,
+    "isMakeShow": true,
+    "isOverlay": false
   },
 
   currentIndexChange(index) {
     let current = index.detail.current;
-    this.currentIndex = current;
+    if (this.isCloze) {
+      this.currentIndex = current;
+      this.currentIndexText = current + 20;
+    } else if (this.isDailyConversation) {
+      this.currentIndex = current;
+      this.currentIndexText = current + 55;
+    } else {
+      this.currentIndex = current;
+      this.currentIndexText = current;
+    }    
     this.setData({
       currentIndex: this.currentIndex,
-      typeName : this.choices[this.currentIndex].typeName
+      currentIndexText: this.currentIndexText,
+      typeName : this.choices[current].typeName
     })
   },
 
@@ -35,6 +48,10 @@ Page({
     let key = option.currentTarget.dataset["key"]
     let choice = option.currentTarget.dataset["choice"]
     let index = option.currentTarget.dataset["index"]
+    console.log("key:", key);
+    console.log("choice:", choice);
+    console.log("index:", index);
+
     if (choice.isSelected) {
       return
     }
@@ -47,6 +64,7 @@ Page({
       choice.isAnswer = false;
     }
     choice.isSelected = true;
+
     this.choices[this.currentIndex] = choice;
     this.setData({
       choices: this.choices,
@@ -127,23 +145,42 @@ Page({
     this.choices = detail;
     this.total = this.choices.length;
     this.paper_id = paper_id;
-    this.typeName = this.choices[this.currentIndex].typeName
+    this.typeName = this.choices[this.currentIndex].typeName;
     console.log("Name", this.typeName);
-    if (this.typeName === "发音题") {
-      this.isPhonetic = true;
-    } else if (this.typeName === "完形填空题") {
-      this.isLongTitle = true;
+    if (this.typeName === "完形填空题") {
+      this.isCloze = true;
+      this.isArticle = false;
+      this.isDailyConversation = false;
     } else if (this.typeName === "阅读理解") {
+      this.isCloze = false;
       this.isArticle = true;
+      this.isDailyConversation = false;
+    } else if (this.typeName === "日常对话题") {
+      this.isCloze = false;
+      this.isArticle = false;
+      this.isDailyConversation = true;
+    }
+    if (this.isCloze) {
+      this.totalText = this.total + 20;
+      this.currentIndexText = 20;
+    } else if (this.isDailyConversation) {
+      this.totalText = this.total + 55;
+      this.currentIndexText = 55;
+    }else{
+      this.totalText = this.total;
+      this.currentIndexText = 0;
     }
     this.setData({
       choices: this.choices,
+      currentIndex : this.currentIndex,
+      currentIndexText : this.currentIndexText,
       total: this.total,
+      totalText: this.totalText,
       paper_id: this.paper_id,
       typeName : this.typeName,
-      isPhonetic : this.isPhonetic,
-      isLongTitle : this.isLongTitle,
-      isArticle : this.isArticle
+      isCloze : this.isCloze,
+      isArticle: this.isArticle,
+      isDailyConversation: this.isDailyConversation
     })
   },
 

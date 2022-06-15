@@ -4,6 +4,6 @@
     "van-button": "@vant/weapp/button/index",
     "van-dialog": "@vant/weapp/dialog/index",
     "van-popup": "@vant/weapp/popup/index"
-    },
+  },
   "navigationBarTitleText": "选择题"
 }

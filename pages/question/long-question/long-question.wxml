@@ -2,23 +2,23 @@
   <swiper class="swiper" circular="{{true}}" bindchange="currentIndexChange">
     <block wx:for="{{choices}}" wx:key="index" wx:for-item="choice">
       <swiper-item>
-        <view class="number">
-          <view class="text-primary number-current">{{ currentIndex + 1 }}</view>
-          <view class="number-total text-title">/{{ total }}</view>
-          <view class="bg-primary number-type">{{ typeName }}</view>
-        </view>
-        <van-divider />
-        <scroll-view scroll-y="true" class="title-scroll">
-          <view class="title">{{ choice.title }}</view>
+        <scroll-view scroll-y="true" class="{{ isDailyConversation ? 'title-scroll1' : 'title-scroll' }}">
+          <view class="title" wx:if="{{ isCloze }}">{{ choice.title }}</view>
+          <view class="title" wx:if="{{ isArticle }}">{{ choice.article }}</view>
+          <view class="title" wx:if="{{ isDailyConversation }}">{{ choice.title }}</view>
+        </scroll-view>
+        <scroll-view scroll-y="true" class="{{ isDailyConversation ? 'other-scroll1' : 'other-scroll' }}">
+          <view class="number">
+            <view class="text-primary number-current">{{ currentIndexText + 1 }}</view>
+            <view class="number-total text-title">/{{ totalText }}</view>
+            <view class="bg-primary number-type">{{ typeName }}</view>
+          </view>
+          <van-divider />
+          <view class="title" wx:if="{{ isArticle }}">{{ choice.title }}</view>
           <view class="option">
             <block wx:for="{{ choice.options }}" wx:key="index" wx:for-item="option">
               <view class="{{ option.type == 1 ? 'option-correct' : option.type == 2 ? 'option-error' : 'option-defult' }}" bindtap="optionSelected" data-key="{{option.key}}" data-choice="{{choice}}" data-index="{{index}}">
-                <!-- 发音题 -->
-                <view wx:if="{{ !isPhonetic }}">{{ option.key + " | " + option.value }}</view>
-                <view wx:if="{{ isPhonetic }}" style="display: flex;">
-                  <view>{{ option.key + " | " }}</view>
-                  <rich-text nodes="{{option.value}}"></rich-text>
-                </view>
+                <view>{{ option.key + " | " + option.value }}</view>
               </view>
             </block>
           </view>

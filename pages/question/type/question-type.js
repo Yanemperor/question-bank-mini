@@ -1,4 +1,5 @@
 // pages/question/type/question-type.js
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const db = wx.cloud.database()
 
@@ -10,12 +11,21 @@ Page({
   data: {
     "paper_id": "",
     "items": [],
-    "choices": [],
+    "choices": [], // 选择题, 词汇与结构题
     "all": [],
-    "texts": [],
+    "texts": [], // 写作题
+    "phonetics": [], // 发音题
+    "cloze": [], // 完形填空
+    "readingComprehension": [], // 阅读理解
+    "dailyConversation": [] // 日常对话题
   },
+  // items: ["发音题", "词汇与结构题", "完形填空", "阅读理解", "日常对话题", "写作题"]
 
   async loadData() {
+    Toast.loading({
+      message: '加载中...',
+      forbidClick: true,
+    });
     // 1.获取数据总数
     let count = await db.collection('answer_questions').where({
       paper_id: this.paper_id
@@ -29,6 +39,16 @@ Page({
       all = all.concat(list.data);
     }
     this.all = all;
+    if (this.paper_id.includes("top_up_political")) {
+      this.political(all);
+    } else if (this.paper_id.includes("top_up_english")) {
+      this.english(all);
+    } 
+    
+    // console.log("返回的结果", this.all);
+  },
+
+  political(all) {
     var choices = [];
     var texts = [];
     for (const key in all) {
@@ -43,28 +63,59 @@ Page({
     }
     this.choices = choices;
     this.texts = texts;
-    console.log("返回的结果", this.texts);
   },
 
+  // "texts": [], // 写作题
+  //   "phonetics": [], // 发音题
+  //   "cloze": [], // 完形填空
+  //   "readingComprehension": [], // 阅读理解
+  //   "dailyConversation": [] // 日常对话题
+  english(all) {
+    var phonetics = [];
+    var choices = [];
+    var texts = [];
+    var cloze = [];
+    var readingComprehension = [];
+    var dailyConversation = [];
+    for (const key in all) {
+      if (Object.hasOwnProperty.call(all, key)) {
+        const item = all[key];
+        if (item.type === "11") {
+          phonetics.push(item);
+        }else if (item.type === "12") {
+          choices.push(item);
+        }else if (item.type === "13") {
+          cloze.push(item);
+        }else if (item.type === "14") {
+          readingComprehension.push(item);
+        }else if (item.type === "15") {
+          dailyConversation.push(item);
+        }else if (item.type === "16") {
+          texts.push(item);
+        }
+      }
+    }
+    this.phonetics = phonetics;
+    this.choices = choices;
+    this.cloze = cloze;
+    this.readingComprehension = readingComprehension;
+    this.dailyConversation = dailyConversation;
+    this.texts = texts;
+    console.log("all:", all);
+
+  },
 
   enquire() {
-    if (this.paper_id.includes("political")) {
+    if (this.paper_id.includes("top_up_political")) {
       this.setData({
         items: ["选择题", "非选择题"]
       });
+    } else if (this.paper_id.includes("top_up_english")) {
+      this.setData({
+        items: ["发音题", "词汇与结构题", "完形填空", "阅读理解", "日常对话题", "写作题"]
+      });
     }
     this.loadData();
-    
-    // let that = this;
-  
-    // db.collection('answer_questions').where({
-    //   paper_id: this.paper_id
-    // }).get({
-    //   success: function (res) {
-    //     console.log(res.data)
-    //     that.choices = res.data;
-    //   }
-    // });
   },
 
   selected(option) {
@@ -74,7 +125,33 @@ Page({
       wx.navigateTo({
         url: `/pages/question/choice-question/choice-question?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
       });
-    } else {
+    } else if (name === "发音题") {
+      var json = JSON.stringify(this.phonetics);
+      wx.navigateTo({
+        url: `/pages/question/choice-question/choice-question?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
+      });
+    }else if (name === "词汇与结构题") {
+      var json = JSON.stringify(this.choices);
+      wx.navigateTo({
+        url: `/pages/question/choice-question/choice-question?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
+      });
+    }else if (name === "完形填空") {
+      var json = JSON.stringify(this.cloze);
+      wx.navigateTo({
+        url: `/pages/question/long-question/long-question?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
+      });
+    }else if (name === "阅读理解") {
+      var json = JSON.stringify(this.readingComprehension);
+      wx.navigateTo({
+        url: `/pages/question/long-question/long-question?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
+      });
+    }else if (name === "日常对话题") {
+      var json = JSON.stringify(this.dailyConversation);
+      wx.navigateTo({
+        url: `/pages/question/long-question/long-question?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
+      });
+    }
+     else {
       var json = JSON.stringify(this.texts);
       wx.navigateTo({
         url: `/pages/question/text-topic/text-topic?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
@@ -82,19 +159,19 @@ Page({
     }
   },
 
-  filter(data) {
-    console.log("data:" + data);
-    var elements = [];
-    for (const key in data) {
-      if (Object.hasOwnProperty.call(data, key)) {
-        const element = data[key];
-        if (element.type === "0") {
-          elements.push(element);
-        }
-      }
-    }
-    this.choices = elements;
-  },
+  // filter(data) {
+  //   console.log("data:" + data);
+  //   var elements = [];
+  //   for (const key in data) {
+  //     if (Object.hasOwnProperty.call(data, key)) {
+  //       const element = data[key];
+  //       if (element.type === "0") {
+  //         elements.push(element);
+  //       }
+  //     }
+  //   }
+  //   this.choices = elements;
+  // },
 
   /**
    * 生命周期函数--监听页面加载

@@ -1,13 +1,12 @@
 /* pages/question/choice-question/choice-question.wxss */
 
 .bg {
-  padding: 16rpx 32rpx;
-  background-color: white;
+  background-color: #ececec;
 }
 
 .swiper {
   /* height: 1000rpx; */
-  height: 85vh;
+  height: 90vh;
 }
 
 .number {
@@ -34,10 +33,12 @@
 
 .title {
   font-size: large;
+  padding-top: 12rpx;
 }
 
 .option {
   margin-top: 20rpx;
+  margin-bottom: 20rpx;
 }
 
 .option-item {
@@ -91,18 +92,42 @@
 }
 
 .title-scroll {
-  padding-bottom: 100rpx;
+  height: 50%;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-bottom: 20rpx;
 }
 
-.parsing-scroll {
-  height: 200rpx;
+.title-scroll1 {
+  height: 40%;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-bottom: 20rpx;
+}
+
+.other-scroll {
+  height: 50%;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-bottom: 20rpx;
+  background-color: white;
+}
+
+.other-scroll1 {
+  height: 60%;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-bottom: 20rpx;
+  background-color: white;
 }
 
 .footer {
   position: fixed;
-  bottom: 0;
+  bottom: 10rpx;
   width: 100%;
   padding-bottom: 50rpx;
+  /* padding-top: 10rpx; */
+  background-color: white;
 }
 
 .footer-submit {

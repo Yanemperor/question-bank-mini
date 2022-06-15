@@ -8,3 +8,5 @@
   </view>
   <view class="line"></view>
 </block>
+
+<van-toast id="van-toast" />

@@ -8,7 +8,8 @@
     "pages/file/list/list",
     "pages/my/index/index",
     "pages/question/text-topic/text-topic",
-    "pages/my/about/about"
+    "pages/my/about/about",
+    "pages/question/long-question/long-question"
   ],
   "tabBar": {
     "custom": true,
