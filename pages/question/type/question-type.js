@@ -25,6 +25,7 @@ Page({
     Toast.loading({
       message: '加载中...',
       forbidClick: true,
+      duration: 0
     });
     // 1.获取数据总数
     let count = await db.collection('answer_questions').where({
@@ -37,15 +38,37 @@ Page({
         paper_id: this.paper_id
       }).skip(i).get();
       all = all.concat(list.data);
+      Toast.clear();
     }
     this.all = all;
     if (this.paper_id.includes("top_up_political")) {
       this.political(all);
     } else if (this.paper_id.includes("top_up_english")) {
       this.english(all);
-    } 
+    } else if (this.paper_id.includes("top_up_language")) {
+      this.language(all);
+    } else {
+      this.political(all);
+    }
     
     // console.log("返回的结果", this.all);
+  },
+
+  language(all) {
+    var choices = [];
+    var texts = [];
+    for (const key in all) {
+      if (Object.hasOwnProperty.call(all, key)) {
+        const item = all[key];
+        if (item.type === "1") {
+          choices.push(item);
+        }else{
+          texts.push(item);
+        }
+      }
+    }
+    this.choices = choices;
+    this.texts = texts;
   },
 
   political(all) {
@@ -80,7 +103,9 @@ Page({
     for (const key in all) {
       if (Object.hasOwnProperty.call(all, key)) {
         const item = all[key];
-        if (item.type === "11") {
+        if (item.type === "1") {
+          choices.push(item);
+        }else if (item.type === "11") {
           phonetics.push(item);
         }else if (item.type === "12") {
           choices.push(item);
@@ -113,6 +138,14 @@ Page({
     } else if (this.paper_id.includes("top_up_english")) {
       this.setData({
         items: ["发音题", "词汇与结构题", "完形填空", "阅读理解", "日常对话题", "写作题"]
+      });
+    } else if (this.paper_id.includes("top_up_language")) {
+      this.setData({
+        items: ["选择题", "阅读题"]
+      });
+    } else {
+      this.setData({
+        items: ["选择题", "非选择题"]
       });
     }
     this.loadData();
@@ -150,28 +183,13 @@ Page({
       wx.navigateTo({
         url: `/pages/question/long-question/long-question?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
       });
-    }
-     else {
+    } else {
       var json = JSON.stringify(this.texts);
       wx.navigateTo({
-        url: `/pages/question/text-topic/text-topic?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
+        url: `/pages/question/write-topic/write-topic?json=${encodeURIComponent(json)}&paper_id=${this.paper_id}`,
       });
     }
   },
-
-  // filter(data) {
-  //   console.log("data:" + data);
-  //   var elements = [];
-  //   for (const key in data) {
-  //     if (Object.hasOwnProperty.call(data, key)) {
-  //       const element = data[key];
-  //       if (element.type === "0") {
-  //         elements.push(element);
-  //       }
-  //     }
-  //   }
-  //   this.choices = elements;
-  // },
 
   /**
    * 生命周期函数--监听页面加载

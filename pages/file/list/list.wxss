@@ -6,3 +6,10 @@
   display: flex;
   align-items: center;
 }
+
+.section {
+  height: 50rpx;
+  padding-left: 10rpx;
+  display: flex;
+  align-items: center;
+}

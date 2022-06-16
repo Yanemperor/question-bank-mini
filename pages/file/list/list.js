@@ -1,4 +1,6 @@
 // pages/file/list/list.js
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+
 const db = wx.cloud.database()
 
 Page({
@@ -19,6 +21,11 @@ Page({
   },
 
   downloadFile(url) {
+    Toast.loading({
+      message: '加载中...',
+      forbidClick: true,
+      duration: 0
+    });
     wx.cloud.downloadFile({
       fileID: url
     }).then(res => {
@@ -26,6 +33,7 @@ Page({
       wx.openDocument({
         filePath: res.tempFilePath,
         success: function (res) {
+          Toast.clear();
           console.log("打开文档成功");
         }
       })

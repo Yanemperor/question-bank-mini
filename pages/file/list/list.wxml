@@ -1,10 +1,15 @@
 <!--pages/file/list/list.wxml-->
 <block wx:for="{{ items }}" wx:key="index" wx:for-item="item">
-  <view class="cell" bindtap="selected" data-url="{{ item.url }}">
+  <view class="section">{{ item.title }}</view>
+  <view wx:for="{{ item.items }}" wx:key="itemIndex" wx:for-item="itemItem">
+    <view class="cell" bindtap="selected" data-url="{{ itemItem.url }}">
     <view class="item-text">
-        {{ item.name }}
+        {{ itemItem.name }}
       </view>
     <van-icon name="arrow" />
   </view>
   <view class="line"></view>
+  </view>
+  
 </block>
+<van-toast id="van-toast" />

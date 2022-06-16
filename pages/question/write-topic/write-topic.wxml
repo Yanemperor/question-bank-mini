@@ -1,0 +1,29 @@
+<view class="bg">
+  <swiper class="swiper" circular="{{true}}" bindchange="currentIndexChange">
+    <block wx:for="{{choices}}" wx:key="index" wx:for-item="choice">
+      <swiper-item>
+        <scroll-view scroll-y="true" class="title-scroll" wx:if="{{ isArticle }}">
+          <view class="title">{{ choice.article }}</view>
+        </scroll-view>
+        <view class="number">
+          <view class="text-primary number-current">{{ currentIndex + 1 }}</view>
+          <view class="number-total text-title">/{{ total }}</view>
+          <view class="bg-primary number-type">{{ typeName }}</view>
+        </view>
+        <van-divider />
+        <view class="title" wx:if="{{ isArticle }}">{{ choice.title }}</view>
+        <scroll-view scroll-y="true" class="title-scroll" wx:if="{{ !isArticle }}">
+          <view class="title">{{ choice.title }}</view>
+        </scroll-view>
+        <van-divider />
+        <van-button type="primary" class="button" bind:click="buttonClick" data-choice="{{choice}}">查看答案</van-button>
+        <scroll-view scroll-y="true" class="answer-scroll" >
+          <view class="answer text-normal" wx:if="{{ choice.isShowAnswer }}">
+          {{ choice.answer }}
+          </view>
+        </scroll-view>
+        
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
