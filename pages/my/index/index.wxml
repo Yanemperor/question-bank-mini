@@ -1,4 +1,10 @@
 <!--pages/my/index/index.wxml-->
+<view class="bg">
+  <view class="image-head">
+    <van-image round width="144rpx" height="144rpx" src="{{ userInfo.avatarUrl }}" />
+  </view>
+  <view class="login" bindtap="login">{{ hasUserInfo ? userInfo.nickName : "点击登录" }}</view>
+</view>
 <block wx:for="{{ items }}" wx:key="index" wx:for-item="item">
   <view class="cell" bindtap="selected" data-name="{{ item.name }}">
     <view class="item">

@@ -11,16 +11,48 @@ Page({
   data: {
     id: "",
     items: [],
-    data: {}
+    idx: 0,
+    index: 0    
+  },
+
+  onChange(event) {
+    this.setData({
+      activeNames: event.detail,
+    });
+  },
+
+  transmit(item) {
+    let tempFilePath = item.currentTarget.dataset["url"];
+    console.log(tempFilePath);
+    wx.shareFileMessage({
+      filePath: tempFilePath,
+      success() {
+        console.log("转发成功");
+        Toast.clear();
+      },
+      fail(fail) {
+        console.log(fail);
+        Toast.clear();
+      },
+    })
+    // this.downloadFileTransmit(url);
+  },
+
+  downloadFileTransmit(url) {
+    
   },
 
   selected(item) {
     let url = item.currentTarget.dataset["url"]
+    let index = item.currentTarget.dataset["index"]
+    let idx = item.currentTarget.dataset["idx"]
     console.log("url:" + url);
-    this.downloadFile(url);
+    console.log("index:" + index);
+    console.log("idx:" + idx);
+    this.downloadFile(url, idx, index);
   },
 
-  downloadFile(url) {
+  downloadFile(url, idx, index) {
     Toast.loading({
       message: '加载中...',
       forbidClick: true,
@@ -30,6 +62,11 @@ Page({
       fileID: url
     }).then(res => {
       console.log(res.tempFilePath)
+      this.items[idx].items[index].tempFilePath = res.tempFilePath;
+      console.log(this.items);
+      this.setData({
+        items: this.items
+      })
       wx.openDocument({
         filePath: res.tempFilePath,
         success: function (res) {

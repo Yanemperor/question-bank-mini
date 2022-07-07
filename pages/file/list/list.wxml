@@ -1,13 +1,15 @@
 <!--pages/file/list/list.wxml-->
-<block wx:for="{{ items }}" wx:key="index" wx:for-item="item">
+<block wx:for="{{ items }}" wx:for-index="idx" wx:key="index" wx:for-item="item">
   <view class="section">{{ item.title }}</view>
   <view wx:for="{{ item.items }}" wx:key="itemIndex" wx:for-item="itemItem">
-    <view class="cell" bindtap="selected" data-url="{{ itemItem.url }}">
+    <view class="cell" bindtap="selected" data-url="{{ itemItem.url }}" data-index="{{ index }}" data-idx="{{ idx }}">
     <view class="item-text">
         {{ itemItem.name }}
-      </view>
-    <van-icon name="arrow" />
-  </view>
+    </view>
+    </view>
+    <view class="footer" wx:if="{{ itemItem.tempFilePath }}">
+      <van-button class="button" plain type="primary" size="small" bind:click="transmit" data-url="{{ itemItem.tempFilePath }}">保存</van-button>
+    </view>
   <view class="line"></view>
   </view>
   

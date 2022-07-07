@@ -13,3 +13,15 @@
   display: flex;
   align-items: center;
 }
+
+.footer {
+  display: flex;
+  background-color: white;
+  justify-content: flex-end;
+  padding-right: 20rpx;
+  padding-bottom: 15rpx;
+}
+
+.button {
+  padding-right: 30rpx;
+}
