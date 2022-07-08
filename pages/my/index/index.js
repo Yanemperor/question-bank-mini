@@ -7,7 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    "userInfo": {},
+    "userInfo": {
+      "_openid": ""
+    },
     "hasUserInfo": false,
     items: [{
       "name": "关于",
@@ -25,77 +27,91 @@ Page({
   },
 
   login() {
-    if (this.hasUserInfo == true) {
+    if (this.hasUserInfo) {
       return;
     }
-    console.log("开始登录");
+    this.getUserProfile();
+  },
+
+  getUserProfile() {
+    let that = this;
     wx.getUserProfile({
       desc: '用于我的页面展示', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
         console.log('res:', res)
-        let userInfo = res.userInfo;
-        wx.cloud.callFunction({
-          name: 'login',
-          complete: res => {
-            console.log('callFunction test result: ', res.result.openid)
-            db.collection('user').doc('todo-identifiant-aleatoire').set({
-              data: {
-                // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
-                openid: res.result.openid,
-                nickName: userInfo.nickName,
-                gender: userInfo.gender,
-                language: userInfo.language,
-                avatarUrl: userInfo.avatarUrl,
-                createTime: Date().toString,
-                freeDownload: 3,
-              },
-              success: function (res) {
-                console.log(res)
-                that.setData({
-                  hasUserInfo : true,
-                  userInfo : res.data.value
-                });
-                wx.setStorage({
-                  data: {
-                    value: userInfo
-                  },
-                  key: 'userInfo',
-                })
-              }
-            })
-          }
+        that.userInfo = res.userInfo
+        that.setData({
+          "userInfo" : that.userInfo,
+        })
+        that.getOpenid();
+      }
+    })
+  },
+
+  getOpenid() {
+    let that = this;
+    wx.cloud.callFunction({
+      name: 'login',
+      complete: res => {
+        console.log("res", res.result.openid);
+        that.userInfo.openid = res.result.openid;
+        that.isHaveUser(res.result.openid);
+      }
+    })
+  },
+
+  isHaveUser(openid) {
+    let that = this
+    db.collection('user').get({
+      '_openid': openid
+    }).then(res => {
+      console.log("queryUser", res.data);
+      if (res.data == false) {
+        console.log("未注册");
+        that.registered();
+      } else {
+        console.log("已注册");
+        let userInfo = res.data[0];
+        that.setData({
+          "hasUserInfo": true,
+        })
+        console.log("userInfo", that.userInfo);
+        wx.setStorage({
+          data: {
+            value: userInfo
+          },
+          key: 'userInfo',
         })
       }
     })
   },
 
-  // db.collection('user').add({
-  //   // data 字段表示需新增的 JSON 数据
-  //   data: {
-  //     // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
-  //     openid: res.result.openid,
-  //     nickName: userInfo.nickName,
-  //     gender: userInfo.gender,
-  //     language: userInfo.language,
-  //     avatarUrl: userInfo.avatarUrl,
-  //     createTime: Date().toString,
-  //   },
-  //   success: function(res) {
-  //     // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
-  //     console.log(res)
-  //     this.userInfo = userInfo;
-  //     this.setData({
-  //       userInfo: userInfo,
-  //       hasUserInfo: true
-  //     })
-  //     wx.setStorage({
-  //       data: {
-  //         value: this.value
-  //       },
-  //       key: 'indexValue',
-  //     })
-  //   }
-  // })
+  registered() {
+    let that = this;
+    db.collection('user').add({
+      data: {
+        nickName: that.userInfo.nickName,
+        gender: that.userInfo.gender,
+        language: that.userInfo.language,
+        avatarUrl: that.userInfo.avatarUrl,
+        createTime: Date().toString,
+        freeDownload: 3,
+      },
+      success: function (res) {
+        console.log("registered", res);
+        that.setData({
+          hasUserInfo: true,
+          userInfo: that.userInfo,
+        });
+        wx.setStorage({
+          data: {
+            value: that.userInfo
+          },
+          key: 'userInfo',
+        })
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -108,8 +124,8 @@ Page({
         that.hasUserInfo = true;
         that.userInfo = res.data.value;
         that.setData({
-          hasUserInfo : true,
-          userInfo : res.data.value
+          hasUserInfo: true,
+          userInfo: res.data.value
         })
         console.log(res);
       }
