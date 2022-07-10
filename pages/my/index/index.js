@@ -1,4 +1,7 @@
 // pages/my/index/index.js
+
+var authManager = require('../../../common/authManager.js');
+
 const db = wx.cloud.database()
 
 Page({
@@ -14,7 +17,6 @@ Page({
     items: [{
       "name": "关于",
     }],
-
   },
 
   selected(item) {
@@ -22,7 +24,7 @@ Page({
     if (name === "关于") {
       wx.navigateTo({
         url: `/pages/my/about/about`,
-      });
+      });      
     }
   },
 
@@ -30,87 +32,22 @@ Page({
     if (this.hasUserInfo) {
       return;
     }
-    this.getUserProfile();
-  },
-
-  getUserProfile() {
+    // this.getUserProfile();
     let that = this;
-    wx.getUserProfile({
-      desc: '用于我的页面展示', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
-        console.log('res:', res)
-        that.userInfo = res.userInfo
-        that.setData({
-          "userInfo" : that.userInfo,
-        })
-        that.getOpenid();
-      }
-    })
-  },
-
-  getOpenid() {
-    let that = this;
-    wx.cloud.callFunction({
-      name: 'login',
-      complete: res => {
-        console.log("res", res.result.openid);
-        that.userInfo.openid = res.result.openid;
-        that.isHaveUser(res.result.openid);
-      }
-    })
-  },
-
-  isHaveUser(openid) {
-    let that = this
-    db.collection('user').get({
-      '_openid': openid
-    }).then(res => {
-      console.log("queryUser", res.data);
-      if (res.data == false) {
-        console.log("未注册");
-        that.registered();
-      } else {
-        console.log("已注册");
-        let userInfo = res.data[0];
-        that.setData({
-          "hasUserInfo": true,
-        })
-        console.log("userInfo", that.userInfo);
-        wx.setStorage({
-          data: {
-            value: userInfo
-          },
-          key: 'userInfo',
-        })
-      }
-    })
-  },
-
-  registered() {
-    let that = this;
-    db.collection('user').add({
-      data: {
-        nickName: that.userInfo.nickName,
-        gender: that.userInfo.gender,
-        language: that.userInfo.language,
-        avatarUrl: that.userInfo.avatarUrl,
-        createTime: Date().toString,
-        freeDownload: 3,
-      },
-      success: function (res) {
-        console.log("registered", res);
-        that.setData({
-          hasUserInfo: true,
-          userInfo: that.userInfo,
-        });
-        wx.setStorage({
-          data: {
-            value: that.userInfo
-          },
-          key: 'userInfo',
-        })
-      }
-    })
+    authManager.login().then(function (userInfo) {
+      console.log("AAA", userInfo)
+      that.hasUserInfo = true
+      that.setData({
+        "userInfo" : userInfo,
+        "hasUserInfo" : true
+      })
+      wx.setStorage({
+        data: {
+          value: userInfo
+        },
+        key: 'userInfo',
+      })
+    });
   },
 
   /**

@@ -3,15 +3,19 @@
   <view class="section">{{ item.title }}</view>
   <view wx:for="{{ item.items }}" wx:key="itemIndex" wx:for-item="itemItem">
     <view class="cell" bindtap="selected" data-url="{{ itemItem.url }}" data-index="{{ index }}" data-idx="{{ idx }}">
-    <view class="item-text">
+      <view class="item-text">
         {{ itemItem.name }}
-    </view>
+      </view>
     </view>
     <view class="footer" wx:if="{{ itemItem.tempFilePath }}">
+      <!-- <view class="footer"> -->
       <van-button class="button" plain type="primary" size="small" bind:click="transmit" data-url="{{ itemItem.tempFilePath }}">保存</van-button>
     </view>
-  <view class="line"></view>
+    <view class="line"></view>
   </view>
-  
+
 </block>
 <van-toast id="van-toast" />
+<van-dialog id="van-dialog" />
+<van-cell title="显示分享面板" bind:click="onClick" />
+<van-share-sheet show="{{ showShare }}" title="立即分享给好友" options="{{ options }}" bind:select="onSelect" bind:close="onClose" />

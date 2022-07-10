@@ -6,7 +6,7 @@ Page({
   data: {
     items: [],
     data: [],
-    value: 1,
+    value: 0,
     options: [
       {
         text: '专升本',
