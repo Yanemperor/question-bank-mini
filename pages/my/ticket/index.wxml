@@ -1,0 +1,17 @@
+<!--pages/my/ticket/index.wxml-->
+<view class="bg">
+  <view class="header">
+    <view class="header-item-left">
+      <view class="header-item-context">
+        <van-icon name="coupon-o" color="#CD7F32" size="40rpx" />
+        <view class="header-item-title">下载券:12</view>
+      </view>
+    </view>
+    <view class="header-item-right">
+      <view class="header-item-context">
+        <van-icon name="coupon-o" color="#ffffff" size="40rpx" />
+        <view class="header-item-title">免费下载券:12</view>
+      </view>
+    </view>
+  </view>
+</view>

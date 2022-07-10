@@ -1,0 +1,44 @@
+/* pages/my/ticket/index.wxss */
+
+.bg {
+  display: flex;
+  background-color: white;
+  width: 100%;
+  height: 280rpx;
+  background-image: url('https://636c-cloud1-6gxrrp6j10c4b06e-1312107704.tcb.qcloud.la/image/bg.png?sign=64f5ec2ecdd21c3d43c350169f966add&t=1657170505');
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-item-left {
+  display: flex;
+  width: 50%;
+  height: 120rpx;
+  padding: 20rpx 10rpx 20rpx 30rpx;
+}
+
+.header-item-right {
+  display: flex;
+  width: 50%;
+  height: 120rpx;
+  padding: 20rpx 30rpx 20rpx 10rpx;
+}
+
+.header-item-context {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8rpx;
+  padding-left: 20rpx;
+}
+
+.header-item-title {
+  color: white;
+  font-size: 32rpx;
+  padding-left: 18rpx;
+}

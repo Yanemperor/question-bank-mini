@@ -8,7 +8,7 @@
 <block wx:for="{{ items }}" wx:key="index" wx:for-item="item">
   <view class="cell" bindtap="selected" data-name="{{ item.name }}">
     <view class="item">
-      <van-icon name="user-o" />
+      <van-icon name="{{ item.icon }}" />
       <view class="item-text">
         {{ item.name }}
       </view>

@@ -15,7 +15,12 @@ Page({
     },
     "hasUserInfo": false,
     items: [{
+      "name": "下载券",
+      "icon": "coupon-o"
+    },
+    {
       "name": "关于",
+      "icon": "user-o"
     }],
   },
 
@@ -25,6 +30,10 @@ Page({
       wx.navigateTo({
         url: `/pages/my/about/about`,
       });      
+    } else if (name === "下载券") {
+      wx.navigateTo({
+        url: `/pages/my/ticket/index`,
+      });
     }
   },
 

@@ -10,7 +10,8 @@
     "pages/question/text-topic/text-topic",
     "pages/my/about/about",
     "pages/question/long-question/long-question",
-    "pages/question/write-topic/write-topic"
+    "pages/question/write-topic/write-topic",
+    "pages/my/ticket/index"
   ],
   "tabBar": {
     "custom": true,
