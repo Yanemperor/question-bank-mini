@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "van-image": "@vant/weapp/image/index"
+    "van-image": "@vant/weapp/image/index",
+    "van-dialog": "@vant/weapp/dialog/index"
   },
   "navigationBarTitleText": "我的"
 }

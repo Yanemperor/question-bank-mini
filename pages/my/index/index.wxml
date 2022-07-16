@@ -17,3 +17,4 @@
   </view>
   <view class="line"></view>
 </block>
+<van-dialog id="van-dialog" />

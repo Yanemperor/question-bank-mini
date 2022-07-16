@@ -1,4 +1,5 @@
 // pages/my/index/index.js
+import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 var authManager = require('../../../common/authManager.js');
 
@@ -31,10 +32,28 @@ Page({
         url: `/pages/my/about/about`,
       });      
     } else if (name === "下载券") {
+      if (!this.hasUserInfo) {
+        this.alertLogin()
+        return
+      }
       wx.navigateTo({
         url: `/pages/my/ticket/index`,
       });
     }
+  },
+
+  alertLogin() {
+    Dialog.confirm({
+      title: '您好, 需要先登录才能查看！',
+      confirmButtonText: '登录'
+    })
+    .then(() => {
+      // on confirm
+      this.login()
+    })
+    .catch(() => {
+      // on cancel
+    });
   },
 
   login() {

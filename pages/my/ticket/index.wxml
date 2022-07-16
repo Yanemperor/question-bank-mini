@@ -1,17 +1,54 @@
 <!--pages/my/ticket/index.wxml-->
 <view class="bg">
+  <van-notice-bar
+  left-icon="volume-o"
+  text="免费下载券每天会重置为3张，通过分享可以获得更多的免费下载券~"
+/>
   <view class="header">
     <view class="header-item-left">
       <view class="header-item-context">
         <van-icon name="coupon-o" color="#CD7F32" size="40rpx" />
-        <view class="header-item-title">下载券:12</view>
+        <view class="header-item-title">下载券:{{ userInfo.downloadTicket }}</view>
       </view>
     </view>
     <view class="header-item-right">
       <view class="header-item-context">
-        <van-icon name="coupon-o" color="#ffffff" size="40rpx" />
-        <view class="header-item-title">免费下载券:12</view>
+        <van-icon name="coupon-o" color="#248067" size="40rpx" />
+        <view class="header-item-title">免费下载券:{{ userInfo.freeDownloadTicket }}</view>
+      </view>
+    </view>
+  </view>
+  <view class="task">
+    <view class="task-title">
+      每日任务
+    </view>
+    <view class="task-cell" bindtap="onClick">
+      <view class="task-left">
+        <view class="task-img">
+          <van-icon name="notes-o" size="50rpx" />
+        </view>
+        <view class="task-text">
+          <view class="task-title">
+            分享
+          </view>
+          <view class="task-detaile">
+            <van-icon name="coupon-o" color="#248067" size="30rpx" />
+            <view class="task-add">
+              +1
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="task-right">
+        <view class="task-right-current">
+          {{ 3 - userInfo.shareCount }}
+        </view>
+        <view class="task-right-total">
+          /3
+        </view>
       </view>
     </view>
   </view>
 </view>
+<van-cell title="显示分享面板" bind:click="onClick" />
+<van-share-sheet show="{{ showShare }}" title="立即分享给好友" options="{{ options }}" bind:select="onSelect" bind:close="onClose" />
