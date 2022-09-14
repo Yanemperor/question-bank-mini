@@ -11,7 +11,8 @@
     "pages/my/about/about",
     "pages/question/long-question/long-question",
     "pages/question/write-topic/write-topic",
-    "pages/my/ticket/index"
+    "pages/my/ticket/index",
+    "pages/my/more/more"
   ],
   "tabBar": {
     "custom": true,

@@ -1,0 +1,13 @@
+<!--pages/my/more/more.wxml-->
+<block wx:for="{{ items }}" wx:key="index" wx:for-item="item">
+  <view class="cell" bindtap="selected" data-name="{{ item.name }}">
+    <view class="item">
+      <van-icon name="{{ item.icon }}" />
+      <view class="item-text">
+        {{ item.name }}
+      </view>
+    </view>
+    <van-icon name="arrow" />
+  </view>
+  <view class="line"></view>
+</block>

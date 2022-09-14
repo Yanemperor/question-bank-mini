@@ -6,6 +6,7 @@ var authManager = require('../../../common/authManager.js');
 var ticketManager = require('../../../common/ticketManager.js');
 
 const db = wx.cloud.database()
+let rewardedVideoAd = null
 
 Page({
 
@@ -29,6 +30,18 @@ Page({
       { name: '分享海报', icon: 'poster' },
       { name: '二维码', icon: 'qrcode' },
     ],
+    sheetShow: false,
+    sheetTitle: "您没有下载券了~",
+    actions: [
+      {
+        name: '查看视频',
+        subname: '获得10张下载券',
+      },
+      {
+        name: '分享',
+        subname: '获得1张临时下载券',
+      },
+    ]
   },
 
   onClick(event) {
@@ -65,18 +78,37 @@ Page({
       that.getUserInfo(that.userInfo);
     }).catch( err => {
       console.log("BBB", err)
-      Dialog.confirm({
-        message: err,
-        confirmButtonText: '分享'
-      }).then(() => {
-        // on confirm
-        that.onClick();
-      })
-      .catch(() => {
-        // on cancel
-      });
+      this.setData({ sheetShow: true });
+      // Dialog.confirm({
+      //   message: err,
+      //   cancelButtonText: "分享",
+      //   confirmButtonText: '查看视频',
+      //   closeOnClickOverlay: true
+      // }).then(() => {
+      //   // on confirm
+      //   that.onAdClick();
+      // })
+      // .catch(() => {
+      //   // on cancel
+      //   that.onClick();
+      // });
     });
   },
+
+  onSheetClose() {
+    this.setData({ sheetShow: false });
+  },
+
+  onSheetSelect(e) {
+    console.log(e)
+    if (e.detail.name == "查看视频") {
+      this.onAdClick()
+    } else if (e.detail.name == "分享") {
+      this.onSheetClose()
+      this.onClick()
+    }
+  },
+
   // 保存
   transmit(item) {
     console.log("transmit", this.userInfo);
@@ -206,6 +238,34 @@ Page({
         that.getUserInfo(res.data.value);
       }
     })
+    this.initAd()
+  },
+
+  initAd() {
+    if (wx.createRewardedVideoAd) {
+      rewardedVideoAd = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-769c67caa7356c80'
+      })
+      rewardedVideoAd.onLoad(() => {
+        console.log('onLoad event emit')
+      })
+      rewardedVideoAd.onError((err) => {
+        console.log('onError event emit', err)
+      })
+      rewardedVideoAd.onClose(res => {
+        // 用户点击了【关闭广告】按钮
+        if (res && res.isEnded) {
+          // 正常播放结束，可以下发游戏奖励
+          this.addDownloadTicket()
+        } else {
+          // 播放中途退出，不下发游戏奖励
+        }
+      })
+    }
+  },
+
+  onAdClick() {
+    rewardedVideoAd.show()
   },
 
   /**

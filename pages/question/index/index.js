@@ -1,4 +1,7 @@
 // pages/question/index/index.js
+var ticketManager = require('../../../common/ticketManager.js');
+
+let interstitialAd = null
 Page({
   /**
    * 页面的初始数据
@@ -104,6 +107,14 @@ Page({
     });
   },
 
+  showAd() {
+    if (interstitialAd) {
+      interstitialAd.show().catch((err) => {
+        console.error(err)
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -118,6 +129,47 @@ Page({
         console.log(res);
       }
     })
+
+    wx.getStorage({
+      key: 'userInfo',
+      success(res) {
+        var userInfo = res.data.value;
+        that.getUserInfo(userInfo)
+      }
+    })
+    this.initAd()
+  },
+
+  getUserInfo(userInfo) {
+    let that = this;
+    console.log("onSelect:", userInfo);
+    ticketManager.searchDownloadTicket(userInfo).then(function (userInfo) {
+      console.log("onSelect: 刷新", userInfo);
+      wx.setStorage({
+        data: {
+          value: userInfo
+        },
+        key: 'userInfo',
+      })
+    }).catch(err => {
+      console.log("AAA", err)
+    });
+  },
+
+  initAd() {
+    if(wx.createInterstitialAd){
+      interstitialAd = wx.createInterstitialAd({ adUnitId: 'adunit-3a5ff13e60d7adaf' })
+      interstitialAd.onLoad(() => {
+        console.log('onLoad event emit')
+        this.showAd()
+      })
+      interstitialAd.onError((err) => {
+        console.log('onError event emit', err)
+      })
+      interstitialAd.onClose((res) => {
+        console.log('onClose event emit', res)
+      })
+    }
   },
 
   /**

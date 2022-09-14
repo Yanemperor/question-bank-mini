@@ -13,9 +13,18 @@
     </view>
     <view class="line"></view>
   </view>
-
 </block>
+
 <van-toast id="van-toast" />
 <van-dialog id="van-dialog" />
 <van-cell title="显示分享面板" bind:click="onClick" />
 <van-share-sheet show="{{ showShare }}" title="立即分享给好友" options="{{ options }}" bind:select="onSelect" bind:close="onClose" />
+<van-action-sheet
+  title="{{ sheetTitle }}"
+  show="{{ sheetShow }}"
+  actions="{{ actions }}"
+  cancel-text="取消"
+  bind:close="onSheetClose"
+  bind:select="onSheetSelect"
+  bind:cancel="onSheetClose"
+/>

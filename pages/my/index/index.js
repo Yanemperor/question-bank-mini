@@ -20,6 +20,10 @@ Page({
       "icon": "coupon-o"
     },
     {
+      "name": "更多小程序",
+      "icon": "apps-o"
+    },
+    {
       "name": "关于",
       "icon": "user-o"
     }],
@@ -38,6 +42,10 @@ Page({
       }
       wx.navigateTo({
         url: `/pages/my/ticket/index`,
+      });
+    } else if (name === "更多小程序") {
+      wx.navigateTo({
+        url: `/pages/my/more/more`,
       });
     }
   },

@@ -48,6 +48,27 @@
         </view>
       </view>
     </view>
+    <view class="task-cell" bindtap="onAdClick">
+      <view class="task-left">
+        <view class="task-img">
+          <van-icon name="notes-o" size="50rpx" />
+        </view>
+        <view class="task-text">
+          <view class="task-title">
+            查看视频广告
+          </view>
+          <view class="task-detaile">
+            <van-icon name="coupon-o" color="#CD7F32" size="30rpx" />
+            <view class="task-add">
+              +10
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="task-right">
+        
+      </view>
+    </view>
   </view>
 </view>
 <van-cell title="显示分享面板" bind:click="onClick" />

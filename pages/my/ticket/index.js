@@ -1,6 +1,7 @@
 // pages/my/ticket/index.js
 var ticketManager = require('../../../common/ticketManager.js');
 var authManager = require('../../../common/authManager.js');
+let rewardedVideoAd = null
 
 Page({
 
@@ -12,12 +13,27 @@ Page({
       "_openid": ""
     },
     showShare: false,
-    options: [
-      { name: '微信', icon: 'wechat', openType: 'share' },
-      { name: '微博', icon: 'weibo' },
-      { name: '复制链接', icon: 'link' },
-      { name: '分享海报', icon: 'poster' },
-      { name: '二维码', icon: 'qrcode' },
+    options: [{
+        name: '微信',
+        icon: 'wechat',
+        openType: 'share'
+      },
+      {
+        name: '微博',
+        icon: 'weibo'
+      },
+      {
+        name: '复制链接',
+        icon: 'link'
+      },
+      {
+        name: '分享海报',
+        icon: 'poster'
+      },
+      {
+        name: '二维码',
+        icon: 'qrcode'
+      },
     ],
   },
 
@@ -35,8 +51,71 @@ Page({
           userInfo: res.data.value
         })
         console.log(res);
+        that.getDownloadTicket();
       }
     })
+    
+    this.initAd()
+  },
+
+  initAd() {
+    if (wx.createRewardedVideoAd) {
+      rewardedVideoAd = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-769c67caa7356c80'
+      })
+      rewardedVideoAd.onLoad(() => {
+        console.log('onLoad event emit')
+      })
+      rewardedVideoAd.onError((err) => {
+        console.log('onError event emit', err)
+      })
+      rewardedVideoAd.onClose(res => {
+        // 用户点击了【关闭广告】按钮
+        if (res && res.isEnded) {
+          // 正常播放结束，可以下发游戏奖励
+          this.addDownloadTicket()
+        } else {
+          // 播放中途退出，不下发游戏奖励
+        }
+      })
+    }
+  },
+
+  onAdClick() {
+    rewardedVideoAd.show()
+  },
+
+  getDownloadTicket() {
+    let userInfo = this.userInfo;
+    let that = this;
+    console.log("onSelect:", userInfo);
+    ticketManager.searchDownloadTicket(userInfo).then(function (userInfo) {
+      console.log("onSelect: 刷新", userInfo);
+      that.userInfo = userInfo
+      that.setData({
+        "userInfo": userInfo,
+      })
+      wx.setStorage({
+        data: {
+          value: userInfo
+        },
+        key: 'userInfo',
+      })
+    }).catch(err => {
+      console.log("AAA", err)
+    });
+  },
+
+  addDownloadTicket() {
+    let userInfo = this.userInfo;
+    let that = this;
+    console.log("onSelect:", userInfo);
+    ticketManager.addDownloadTicket(userInfo).then(function (userInfo) {
+      console.log("onSelect: 刷新");
+      that.getUserInfo(that.userInfo);
+    }).catch(err => {
+      console.log("AAA", err)
+    });
   },
 
   getUserInfo(userInfo) {
@@ -57,11 +136,15 @@ Page({
   },
 
   onClick(event) {
-    this.setData({ showShare: true });
+    this.setData({
+      showShare: true
+    });
   },
 
   onClose() {
-    this.setData({ showShare: false });
+    this.setData({
+      showShare: false
+    });
   },
 
   onSelect(event) {
@@ -71,7 +154,7 @@ Page({
     ticketManager.addFreeDownloadTicket(userInfo).then(function (userInfo) {
       console.log("onSelect: 刷新");
       that.getUserInfo(that.userInfo);
-    }).catch( err => {
+    }).catch(err => {
       console.log("BBB", err)
     });
     that.onClose();

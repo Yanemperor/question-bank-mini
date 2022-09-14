@@ -2,6 +2,7 @@
 <van-dropdown-menu>
   <van-dropdown-item value="{{ value }}" options="{{ options }}" bind:change="change"/>
 </van-dropdown-menu>
+<ad unit-id="adunit-83985951ffe1155a"></ad>
 <view class="separated"></view>
 <!-- <view class="cell" wx:for="{{ items }}" bindtap="selected(item)"> {{ item.name }} </view> -->
 <block wx:for="{{ options[value].items }}" wx:key="index" wx:for-item="item">

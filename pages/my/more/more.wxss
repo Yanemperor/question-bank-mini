@@ -1,0 +1,9 @@
+/* pages/my/more/more.wxss */
+.item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-text {
+  padding-left: 15rpx;
+}
