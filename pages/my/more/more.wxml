@@ -11,3 +11,8 @@
   </view>
   <view class="line"></view>
 </block>
+
+<view style="padding-top: 30rpx;">
+
+  <ad unit-id="adunit-ed384a6e2cb20dab" ad-type="video" ad-theme="white"></ad>
+</view>

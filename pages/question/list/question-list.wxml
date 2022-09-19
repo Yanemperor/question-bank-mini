@@ -8,3 +8,8 @@
   </view>
   <view class="line"></view>
 </block>
+
+<view style="padding-top: 30rpx;">
+
+  <ad unit-id="adunit-ecb09927d4519a06" ad-type="video" ad-theme="white"></ad>
+</view>

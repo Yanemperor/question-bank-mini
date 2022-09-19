@@ -6,7 +6,7 @@ export default [
   },
   {
     icon: 'notes-o',
-    text: '真题',
+    text: '真题下载',
     url: '/pages/file/index/index',
   },
   {

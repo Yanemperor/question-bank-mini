@@ -28,3 +28,8 @@
   bind:select="onSheetSelect"
   bind:cancel="onSheetClose"
 />
+
+<view style="padding-top: 30rpx;">
+
+  <ad unit-id="adunit-faa8bf5c01819ee8" ad-type="video" ad-theme="white"></ad>
+</view>
